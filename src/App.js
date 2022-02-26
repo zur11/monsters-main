@@ -4,24 +4,39 @@ import './App.css';
 
 class App extends Component {
   constructor() {
-    super(); //* Calls the constructor Method on Component Class
+    super(); 
 
-    this.state = { //* super() gives access to this.state
-      string: 'Hello Villa ilalo'
-    }
-  }
+    this.state = { 
+      monsters: [ 
+        {
+          name: 'Frankenstein',
+          id: 'a1b2c'
+        },
+        {
+          name: 'Dracula',
+          id: 'a2c3d'
+        },
+        {
+          name: 'Zombie',
+          id: 'a3b4d'
+        }
+      ]
+    };
+  };
+
   render() {
     return (
       <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{this.state.string}</p>
-        <button onClick={() => this.setState({string: 'Welcome to the Villa'})}>Change Text
-        </button>
-      </header>
-    </div>
+        {
+          this.state.monsters.map(monster => 
+            (<h1 key = {monster.id}> 
+              {monster.name} 
+            </h1>)
+          )
+        }
+      </div>
     )
-  }
-}
+  };
+};
 
 export default App;
