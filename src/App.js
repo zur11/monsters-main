@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import  CardList  from './components/card-list/card-list.component.jsx';
 import  SearchBox from './components/search-box/search-box.component.jsx';
@@ -6,14 +6,32 @@ import  SearchBox from './components/search-box/search-box.component.jsx';
 import './App.css';
 
 const App = () => {
-  console.log('render');
 
-  const [searchField, setSearchField] = useState(''); //* [value, setValue]
-  console.log(searchField);
+  const [searchField, setSearchField] = useState(''); 
+  const [monsters, setMonsters] = useState([]); 
+  const [filteredMonsters, setFilterMonsters] = useState(monsters); 
+
+  //* useEffect(() => { 1 callback-function }, [ 2 dependency-array ])
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(users => setMonsters(users)
+      );
+  }, []); //* Empty Arr means c/b func runs only once
+
+  useEffect(() => {
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    });
+
+    setFilterMonsters(filteredMonsters);
+  }, [monsters, searchField]); //* c/b func runs when arr dependecies change
+
 
   const onSearchChange = (e) => { 
     const searchFieldString = e.target.value.toLowerCase();
-    setSearchField(searchFieldString); //* triggers render when init-value changes
+    setSearchField(searchFieldString); 
   };
 
   return(
@@ -26,7 +44,7 @@ const App = () => {
         placeholder='search monsters' 
         onChangeHandler={ onSearchChange }
       />
-      {/*  <CardList monsters={filteredMonsters} /> */}
+      <CardList monsters={filteredMonsters} /> 
     </div> 
   )
 }
@@ -44,10 +62,11 @@ const App = () => {
 
   componentDidMount() {
     fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => response.json())
-    .then(users => this.setState(() => {
-      return { monsters: users }}
-    ));
+      .then(response => response.json())
+      .then(users => this.setState(() => {
+        return { monsters: users };
+      })
+    );
   };
 
   onSearchChange = (e) => { 
