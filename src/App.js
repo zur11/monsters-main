@@ -11,14 +11,12 @@ const App = () => {
   const [monsters, setMonsters] = useState([]); 
   const [filteredMonsters, setFilterMonsters] = useState(monsters); 
 
-  //* useEffect(() => { 1 callback-function }, [ 2 dependency-array ])
-
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
         .then(users => setMonsters(users)
       );
-  }, []); //* Empty Arr means c/b func runs only once
+  }, []); 
 
   useEffect(() => {
     const filteredMonsters = monsters.filter((monster) => {
@@ -26,7 +24,7 @@ const App = () => {
     });
 
     setFilterMonsters(filteredMonsters);
-  }, [monsters, searchField]); //* c/b func runs when arr dependecies change
+  }, [monsters, searchField]); 
 
 
   const onSearchChange = (e) => { 

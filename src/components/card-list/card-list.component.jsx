@@ -1,19 +1,14 @@
-import { Component } from 'react';
 import  Card  from '../card/card.component';
 import './card-list.styles.css';
 
-class CardList extends Component {
-    render() {
-        const { monsters } = this.props;
+//* Functional Component - Implicit return
 
-        return (
-            <div className='card-list'>
-                 {monsters.map( monster => (
-                     <Card monster={monster}/>
-                 ))}
-            </div>
-        );
-    };
-};
+const CardList = ({ monsters }) => ( //* Props: Distructure inside param
+    <div className='card-list'>
+        {monsters.map( monster => (
+            <Card monster={monster}/>
+        ))}
+    </div>
+);
 
 export default CardList;

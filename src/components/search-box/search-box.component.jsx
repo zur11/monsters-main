@@ -1,18 +1,14 @@
-import { Component } from "react";
 import './search-box.styles.css';
 
+//* Functional Component - Implicit return
 
-class SearchBox extends Component {
-    render() {
-        return (
-            <input 
-                className={`search-box ${this.props.className}`}
-                type={this.props.type} 
-                placeholder={this.props.placeholder}
-                onChange={this.props.onChangeHandler} 
-            />
-        )
-    }
-}
+const SearchBox = ({className, placeholder, onChangeHandler, type}) => (
+    <input 
+        className={`search-box ${className}`}
+        type={type} 
+        placeholder={placeholder}
+        onChange={onChangeHandler} 
+    />
+);
 
 export default SearchBox;
